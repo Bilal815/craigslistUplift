@@ -1,1 +1,1 @@
-web: gunicorn CraigsListUplifted.wsgi
+web: gunicorn craigsListUplifted.wsgi

@@ -1,4 +1,5 @@
 import requests
+import re
 from requests.compat import quote_plus
 from django.shortcuts import render
 from bs4 import BeautifulSoup
@@ -30,14 +31,21 @@ def new_search(request):
         if post.find(class_='result-price'):
             post_price = post.find(class_= 'result-price').text
         else:
-            post_price = 'Contact for price'
+            post_price = 'N/A'
+
+        r1 = re.findall(r'\$\w' ,post_text)
+        if r1:
+            post_price = r1[0]
+        else:
+            post_price = 'N/A'
             
         if post.find(class_='result-image').get('data-ids'):
-            post_image_id = post.find(class_='result-image').get('data-ids').split(',')[0].split(':')
+            post_image_id = post.find(class_='result-image').get('data-ids').split(',')[0].split(':')[1]
             post_image_url = BASE_IMAGE_URL.format(post_image_id)
             print(post_image_url)
         else:
-            post_image_url = 'htpps://craigslist.org/images/peace.jpg'
+            post_image_url = 'https://th.bing.com/th/id/OIP._wpJXMTfF9DQvsXfjWohDgHaHa?w=176&h=180&c=7&o=5&dpr=1.05&pid=1.7'
+
 
         final_postings.append((post_title, post_url, post_price, post_image_url))
 
