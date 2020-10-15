@@ -32,12 +32,6 @@ def new_search(request):
             post_price = post.find(class_= 'result-price').text
         else:
             post_price = 'N/A'
-
-        r1 = re.findall(r'\$\w' ,post_text)
-        if r1:
-            post_price = r1[0]
-        else:
-            post_price = 'N/A'
             
         if post.find(class_='result-image').get('data-ids'):
             post_image_id = post.find(class_='result-image').get('data-ids').split(',')[0].split(':')[1]
@@ -55,3 +49,10 @@ def new_search(request):
     }
     
     return render(request, 'my_app/new_search.html', stuff_for_frontend)
+'''
+        r1 = re.findall(r'\$\w' ,post_text)
+        if r1:
+            post_price = r1[0]
+        else:
+            post_price = 'N/A'
+'''            
